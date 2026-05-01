@@ -21,19 +21,3 @@ describe('Board.receiveAttack', () => {
     expect(board.allShipsSunk()).toBe(true);
   });
 });
-
-// tests/AIPlayer.test.js
-describe('HuntTargetStrategy', () => {
-  it('enqueues neighbors after a hit', () => {
-    const strategy = new HuntTargetStrategy(10);
-    strategy.onResult(5, 5, 'hit');
-    expect(strategy.targetQueue.length).toBeGreaterThan(0);
-  });
-
-  it('clears queue after a sunk', () => {
-    const strategy = new HuntTargetStrategy(10);
-    strategy.onResult(5, 5, 'hit');
-    strategy.onResult(5, 6, 'sunk');
-    expect(strategy.targetQueue.length).toBe(0);
-  });
-});
