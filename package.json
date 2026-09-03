@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "start": "webpack serve --mode development",
-  "build": "webpack --mode production",
-  "test":  "jest --watch",
-  "test:ci": "jest --coverage"
-},
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production",
+    "test": "jest --watch",
+    "test:ci": "jest --coverage"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.2",
     "babel-jest": "^30.3.0",
+    "babel-loader": "^10.1.1",
     "css-loader": "^7.1.4",
     "html-webpack-plugin": "^5.6.7",
     "jest": "^30.3.0",
