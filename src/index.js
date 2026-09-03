@@ -21,6 +21,9 @@ const modalRestartBtn = document.getElementById('modal-restart-btn');
 
 let game;
 let setup = null;
+// A shot the player attempted while the computer was taking its turn; it is
+// delivered once the player's turn starts so no click is ever silently lost.
+let pendingShot = null;
 
 // ── screen routing ──────────────────────────────────────────────
 function showScreen(target) {
@@ -63,17 +66,17 @@ function handleComputerTurn() {
   setTimeout(() => {
     game.computerAttack();
     refreshBoards();
-    if (game.isOver()) endGame();
-    else updateTurnIndicator();
+    if (game.isOver()) { endGame(); return; }
+    updateTurnIndicator();
+    // Deliver any shot the player queued while the enemy was thinking, so no
+    // click is silently dropped.
+    deliverPendingShot();
   }, 400);
 }
 
 // ── human attack ────────────────────────────────────────────────
-function handleCellClick(event) {
+function tryHumanAttack(row, col) {
   if (game.isOver() || game.currentPlayer !== 'human') return;
-  if (!event.target.classList.contains('enemy')) return;
-  const row = Number(event.target.dataset.row);
-  const col = Number(event.target.dataset.col);
   if (game.computerBoard.shots.has(`${row},${col}`)) return;
 
   audio.playSfx('fire');
@@ -85,9 +88,34 @@ function handleCellClick(event) {
   else handleComputerTurn();
 }
 
+function handleCellClick(event) {
+  if (game.isOver()) return;
+  if (!event.target.classList.contains('enemy')) return;
+  const row = Number(event.target.dataset.row);
+  const col = Number(event.target.dataset.col);
+
+  if (game.currentPlayer !== 'human') {
+    // Queue the shot for the start of the player's next turn. The first queued
+    // cell wins; later clicks are ignored until it is delivered.
+    if (!pendingShot) pendingShot = { row, col };
+    return;
+  }
+  tryHumanAttack(row, col);
+}
+
+function deliverPendingShot() {
+  if (!pendingShot) return;
+  const { row, col } = pendingShot;
+  pendingShot = null;
+  tryHumanAttack(row, col);
+}
+
 // ── end of game ─────────────────────────────────────────────────
 function endGame() {
   audio.stopMusic();
+  // Reveal both fleets so it is clear each side had the same five ships.
+  renderBoard(humanBoardEl, game.humanBoard, { enemy: false, revealed: true });
+  renderBoard(computerBoardEl, game.computerBoard, { enemy: true, revealed: true });
   if (game.winner === 'human') {
     showModal('Victory!', 'You sank the entire enemy fleet.');
   } else if (game.winner === 'computer') {
@@ -99,6 +127,7 @@ function endGame() {
 
 // ── start / restart ─────────────────────────────────────────────
 function beginBattle() {
+  pendingShot = null;
   game.resetAI();
   game.placeComputerFleet();
   audio.playMusic('battle');
