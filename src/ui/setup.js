@@ -266,6 +266,7 @@ export function initSetupScreen({ startEl, onStart }) {
     fresh.placeHumanFleet(null);
     game.humanBoard = fresh.humanBoard;
     game.fleet = fresh.fleet;
+    game.ai = fresh.ai;
     active = null;
     refresh();
   }
@@ -280,6 +281,7 @@ export function initSetupScreen({ startEl, onStart }) {
     game.fleet = fresh.fleet;
     game.currentPlayer = fresh.currentPlayer;
     game.winner = fresh.winner;
+    game.ai = fresh.ai;
     active = null;
     refresh();
   }

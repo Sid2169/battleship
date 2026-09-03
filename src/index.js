@@ -99,6 +99,7 @@ function endGame() {
 
 // ── start / restart ─────────────────────────────────────────────
 function beginBattle() {
+  game.resetAI();
   game.placeComputerFleet();
   audio.playMusic('battle');
   modal.classList.add('hidden');
