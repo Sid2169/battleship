@@ -18,7 +18,32 @@
 
   <!-- Board setup screen -->
   <section id="screen-setup" class="screen setup hidden">
-    <!-- populated in board setup feature -->
+    <header class="setup-header">
+      <h1>Arrange Your Fleet</h1>
+      <p class="setup-instructions">
+        Drag ships onto the board and drop them to place. Use
+        <strong>R</strong> or the rotate button to change orientation.
+        Right-click a placed ship to pick it back up.
+      </p>
+    </header>
+
+    <div class="setup-layout">
+      <div class="setup-panel">
+        <div id="setup-palette" class="setup-palette"></div>
+        <button id="rotate-btn" type="button" class="rotate-btn">Rotate (R)</button>
+        <button id="random-btn" type="button" class="rotate-btn">Random</button>
+        <button id="reset-btn" type="button" class="rotate-btn">Clear</button>
+      </div>
+
+      <div class="setup-panel">
+        <div id="setup-board" class="board setup-board"></div>
+      </div>
+    </div>
+
+    <footer class="setup-footer">
+      <span id="setup-status" class="setup-status"></span>
+      <button id="start-game-btn" type="button" class="cta-btn" disabled>Start Battle</button>
+    </footer>
   </section>
 
   <!-- Game screen -->
