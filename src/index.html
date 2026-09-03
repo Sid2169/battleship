@@ -6,30 +6,48 @@
   <title>Battleship</title>
 </head>
 <body>
-  <header class="app-header">
-    <h1>Battleship</h1>
-    <p id="turn-indicator" class="turn-indicator">Their ships are hidden. Fire at will!</p>
-    <button id="restart-btn" type="button" class="restart-btn">New Game</button>
-  </header>
-
-  <main class="boards">
-    <section class="board-panel">
-      <h2 class="board-title">Your Fleet</h2>
-      <div id="human-board" class="board"></div>
-    </section>
-
-    <section class="board-panel">
-      <h2 class="board-title">Enemy Waters</h2>
-      <div id="computer-board" class="board"></div>
-    </section>
-  </main>
-
-  <div id="game-over-modal" class="modal hidden">
-    <div class="modal-content">
-      <h2 id="result-title"></h2>
-      <p id="result-message"></p>
-      <button id="modal-restart-btn" type="button" class="restart-btn">Play Again</button>
+  <!-- Home / title screen -->
+  <section id="screen-home" class="screen home">
+    <div class="home-background"></div>
+    <div class="home-content">
+      <h1 class="home-title">Battleship</h1>
+      <p class="home-subtitle">Sink the enemy fleet</p>
+      <button id="play-btn" type="button" class="cta-btn">Play</button>
     </div>
-  </div>
+  </section>
+
+  <!-- Board setup screen -->
+  <section id="screen-setup" class="screen setup hidden">
+    <!-- populated in board setup feature -->
+  </section>
+
+  <!-- Game screen -->
+  <section id="screen-game" class="screen game hidden">
+    <header class="app-header">
+      <h1>Battleship</h1>
+      <p id="turn-indicator" class="turn-indicator">Their ships are hidden. Fire at will!</p>
+      <button id="restart-btn" type="button" class="restart-btn">New Game</button>
+    </header>
+
+    <main class="boards">
+      <section class="board-panel">
+        <h2 class="board-title">Your Fleet</h2>
+        <div id="human-board" class="board"></div>
+      </section>
+
+      <section class="board-panel">
+        <h2 class="board-title">Enemy Waters</h2>
+        <div id="computer-board" class="board"></div>
+      </section>
+    </main>
+
+    <div id="game-over-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="result-title"></h2>
+        <p id="result-message"></p>
+        <button id="modal-restart-btn" type="button" class="restart-btn">Play Again</button>
+      </div>
+    </div>
+  </section>
 </body>
 </html>
