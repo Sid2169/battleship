@@ -23,4 +23,19 @@ describe('Board.receiveAttack', () => {
     board.receiveAttack(0, 0);
     expect(board.allShipsSunk()).toBe(true);
   });
+
+  describe('placeShip', () => {
+    it('stores the ship orientation on the placed ship', () => {
+      const board = new Board();
+      const ship = new Ship(3, 'Battleship');
+      board.placeShip(ship, 2, 4, true);
+      expect(ship.isVertical).toBe(true);
+    });
+
+    it('rejects out-of-bounds placement', () => {
+      const board = new Board();
+      const ship = new Ship(4, 'Carrier');
+      expect(() => board.placeShip(ship, 8, 8, false)).toThrow();
+    });
+  });
 });

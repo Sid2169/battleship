@@ -12,6 +12,7 @@ export class Board {
   placeShip(ship, row, col, isVertical) {
     const cells = this._getCells(ship.length, row, col, isVertical);
     if (!this._isPlacementValid(cells)) throw new Error('Invalid placement');
+    ship.isVertical = isVertical;
     cells.forEach(([r, c], i) => {
       this.grid[r][c] = { ship, index: i };
     });

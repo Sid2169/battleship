@@ -18,4 +18,14 @@ describe('Ship', () => {
     ship.hit(1);
     expect(ship.isSunk()).toBe(false);
   });
+
+  it('accepts an optional name identifying its fleet type', () => {
+    const ship = new Ship(4, 'Battleship');
+    expect(ship.name).toBe('Battleship');
+  });
+
+  it('defaults the name to a generic label', () => {
+    const ship = new Ship(2);
+    expect(ship.name).toBe('Ship');
+  });
 });

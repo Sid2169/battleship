@@ -1,3 +1,5 @@
+import { applyShipBackground } from './ships.js';
+
 export function renderBoard(container, board, { enemy = false, revealed = false } = {}) {
   container.innerHTML = '';
   container.replaceChildren();
@@ -14,9 +16,19 @@ export function renderBoard(container, board, { enemy = false, revealed = false 
       const state = getCellState(board, r, c);
       applyCellState(cell, state, { enemy, revealed });
 
+      // render the fleet sprite underneath hit/miss markers
+      if (!enemy || revealed) renderShipOnCell(cell, board, r, c);
+
       container.appendChild(cell);
     }
   }
+}
+
+function renderShipOnCell(cell, board, row, col) {
+  const entry = board.grid[row][col];
+  if (!entry) return;
+  const { ship, index } = entry;
+  applyShipBackground(cell, ship.name, index, ship.length, ship.isVertical);
 }
 
 export function getCellState(board, row, col) {
