@@ -1,5 +1,6 @@
 import { Board } from './Board.js';
 import { Ship } from './Ship.js';
+import { ComputerAI } from './computerAI.js';
 
 export const FLEET = [
   { name: 'Carrier', length: 5 },
@@ -17,6 +18,7 @@ export class Game {
     this.currentPlayer = 'human';
     this.winner = null;
     this.fleet = FLEET.map((s) => ({ ...s }));
+    this.ai = new ComputerAI(size);
   }
 
   get fleetLengths() {
@@ -73,22 +75,17 @@ export class Game {
     if (this.isOver() || this.currentPlayer !== 'computer') {
       throw new Error('Not the computer turn or game is over');
     }
-    const move = this._pickComputerMove();
+    const move = this.ai.nextMove(this.humanBoard);
     const result = this.humanBoard.receiveAttack(move.row, move.col);
+    this.ai.record(this.humanBoard, move.row, move.col, result);
     this.currentPlayer = 'human';
     this._checkWinner();
     return { ...move, result };
   }
 
-  _pickComputerMove() {
-    const untried = [];
-    for (let r = 0; r < this.size; r += 1) {
-      for (let c = 0; c < this.size; c += 1) {
-        if (!this.humanBoard.shots.has(`${r},${c}`)) untried.push([r, c]);
-      }
-    }
-    const [row, col] = untried[Math.floor(Math.random() * untried.length)];
-    return { row, col };
+  // Clear the computer's targeting memory before a new battle begins.
+  resetAI() {
+    this.ai.reset();
   }
 
   _checkWinner() {
