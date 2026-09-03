@@ -5,5 +5,5 @@ export class Ship {
         this.hits = new Set();
     }
     hit(index) { this.hits.add(index); }
-    isSunk() { return this.hits.size >= this.lenght; }
+    isSunk() { return this.hits.size >= this.length; }
 }

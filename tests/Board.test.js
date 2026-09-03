@@ -1,4 +1,7 @@
 // tests/Board.test.js
+import { Board } from '../src/core/Board.js';
+import { Ship } from '../src/core/Ship.js';
+
 describe('Board.receiveAttack', () => {
   it('returns hit when a ship occupies the cell', () => {
     const board = new Board();
