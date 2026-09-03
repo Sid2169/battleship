@@ -21,6 +21,10 @@ module.exports = (env, argv) => ({
     rules: [
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
       { test: /\.js$/,  exclude: /node_modules/, use: 'babel-loader' },
+      // Images (ship sprites) - inline small assets, emit larger files
+      { test: /\.(png|jpe?g|gif|svg)$/i, type: 'asset' },
+      // Audio (music and sound effects) - always emit to dist
+      { test: /\.(ogg|mp3|wav|m4a)$/i, type: 'asset/resource' },
     ],
   },
   mode: argv.mode || 'development',
