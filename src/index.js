@@ -106,7 +106,8 @@ function beginBattle() {
   updateTurnIndicator();
 }
 
-function startGameFromSetup() {
+function startGameFromSetup(g) {
+  game = g;
   showScreen(screenGame);
   beginBattle();
 }
