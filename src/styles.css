@@ -1,0 +1,159 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0b1026, #141a3a);
+  color: #e6ecff;
+  min-height: 100vh;
+}
+
+.app-header {
+  text-align: center;
+  padding: 24px 16px 8px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.turn-indicator {
+  margin: 8px 0 4px;
+  font-size: 1rem;
+  color: #9fb0e8;
+}
+
+.restart-btn {
+  margin-top: 10px;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  background: #3b5bdb;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.restart-btn:hover {
+  background: #2b4bc0;
+}
+
+.boards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+  padding: 24px 16px;
+}
+
+.board-panel {
+  text-align: center;
+}
+
+.board-title {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  color: #c6d0f5;
+  letter-spacing: 1px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 34px);
+  grid-template-rows: repeat(10, 34px);
+  gap: 2px;
+  background: #1b2348;
+  padding: 6px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.cell {
+  width: 34px;
+  height: 34px;
+  background: #25305e;
+  border: 1px solid #33417a;
+  border-radius: 4px;
+  cursor: default;
+}
+
+.cell.enemy {
+  cursor: crosshair;
+}
+
+.cell.enemy:hover:not(.attacked) {
+  background: #3d4f96;
+}
+
+.cell.ship:not(.enemy) {
+  background: #4d6bb3;
+  border-color: #5f7fd0;
+}
+
+.cell.hit {
+  background: #e05262;
+  border-color: #f06a78;
+}
+
+.cell.hit::after {
+  content: '\2715';
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.cell.miss:not(.enemy)::after,
+.cell.miss::after {
+  content: '\2022';
+  color: #91a3d8;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.cell.attacked {
+  pointer-events: none;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 25, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.modal-content {
+  background: #18204a;
+  padding: 32px 40px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.modal-content h2 {
+  margin: 0 0 8px;
+}
+
+.modal-content p {
+  margin: 0 0 16px;
+  color: #b9c4ef;
+}
+
+.hidden {
+  display: none !important;
+}
