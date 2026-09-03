@@ -38,12 +38,12 @@ export class Game {
   }
 
   placeRandomFleet(board) {
-    this.fleet.forEach(({ length }) => {
-      this.placeShipRandomly(board, length);
+    this.fleet.forEach(({ name, length }) => {
+      this.placeShipRandomly(board, length, name);
     });
   }
 
-  placeShipRandomly(board, length) {
+  placeShipRandomly(board, length, name) {
     let placed = false;
     while (!placed) {
       const isVertical = Math.random() < 0.5;
@@ -51,7 +51,7 @@ export class Game {
       const row = Math.floor(Math.random() * this.size);
       const col = Math.floor(Math.random() * this.size);
       try {
-        board.placeShip(new Ship(length), row, col, isVertical);
+        board.placeShip(new Ship(length, name), row, col, isVertical);
         placed = true;
       } catch (e) {
         // retry with a different random placement

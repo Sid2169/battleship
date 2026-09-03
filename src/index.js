@@ -1,6 +1,6 @@
 import './styles.css';
-import { Game } from './core/Game.js';
 import { renderBoard } from './ui/DOM.js';
+import { initSetupScreen } from './ui/setup.js';
 import { audio } from './audio/audio.js';
 
 // Screen elements
@@ -20,11 +20,19 @@ const resultMessage  = document.getElementById('result-message');
 const modalRestartBtn = document.getElementById('modal-restart-btn');
 
 let game;
+let setup = null;
 
 // ── screen routing ──────────────────────────────────────────────
 function showScreen(target) {
   [screenHome, screenSetup, screenGame].forEach(s => s.classList.add('hidden'));
   target.classList.remove('hidden');
+}
+
+function openSetup() {
+  showScreen(screenSetup);
+  if (!setup) {
+    setup = initSetupScreen({ startEl: document.getElementById('start-game-btn'), onStart: startGameFromSetup });
+  }
 }
 
 // ── board helpers ───────────────────────────────────────────────
@@ -90,9 +98,7 @@ function endGame() {
 }
 
 // ── start / restart ─────────────────────────────────────────────
-function startGame() {
-  game = new Game();
-  game.placeHumanFleet();
+function beginBattle() {
   game.placeComputerFleet();
   audio.playMusic('battle');
   modal.classList.add('hidden');
@@ -100,11 +106,13 @@ function startGame() {
   updateTurnIndicator();
 }
 
-// ── event wiring ────────────────────────────────────────────────
-playBtn.addEventListener('click', () => {
+function startGameFromSetup() {
   showScreen(screenGame);
-  startGame();
-});
+  beginBattle();
+}
+
+// ── event wiring ────────────────────────────────────────────────
+playBtn.addEventListener('click', openSetup);
 
 computerBoardEl.addEventListener('click', handleCellClick);
 restartBtn.addEventListener('click', () => {
@@ -112,8 +120,14 @@ restartBtn.addEventListener('click', () => {
   showScreen(screenHome);
   audio.playMusic('menu');
 });
-modalRestartBtn.addEventListener('click', startGame);
+// After a game ends, return to setup to arrange a fresh fleet
+modalRestartBtn.addEventListener('click', () => {
+  audio.stopMusic();
+  if (setup) setup.reset();
+  openSetup();
+});
 
 // ── boot ────────────────────────────────────────────────────────
 showScreen(screenHome);
 audio.playMusic('menu');
+
